@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-// Updated interfaces to match the backend response
+// Interfaces (Sequel, MovieDetails, etc.) remain the same
 export interface Sequel {
   content_id: string;
   poster_url: string;
@@ -24,7 +25,6 @@ export interface MovieDetailsResponse {
   sequels: Sequel[];
 }
 
-// Basic movie info for the browse grid
 export interface Movie {
   content_id: string;
   content_name: string;
@@ -34,7 +34,7 @@ export interface Movie {
 @Component({
   selector: 'app-browse',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
   templateUrl: './browse.component.html',
   styleUrls: ['./browse.component.scss']
 })
@@ -43,16 +43,35 @@ export class BrowseComponent implements OnInit {
   selectedMovieDetails: MovieDetailsResponse | null = null;
   isModalVisible = false;
   isModalLoading = false;
-  apiUrl = "/api/content"; // Using the proxy
+  searchForm: FormGroup;
+  apiUrl = "/api/content";
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private fb: FormBuilder) {
+    this.searchForm = this.fb.group({
+      keyword: [''],
+      genre: [''],
+      actor: [''],
+      director: ['']
+    });
+  }
 
   ngOnInit(): void {
     this.fetchMovies();
+    // Removed the valueChanges subscription
   }
 
   fetchMovies(): void {
-    this.http.get<Movie[]>(`${this.apiUrl}/browse/movies`)
+    let params = new HttpParams();
+    const formValues = this.searchForm.value;
+
+    Object.keys(formValues).forEach(key => {
+      const value = formValues[key];
+      if (value) {
+        params = params.append(key, value);
+      }
+    });
+
+    this.http.get<Movie[]>(`${this.apiUrl}/browse/movies`, { params })
       .subscribe(movies => {
         this.movies = movies;
         this.cdr.detectChanges();

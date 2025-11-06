@@ -9,7 +9,34 @@
 h1 {
   font-size: 1.75rem;
   color: #fff;
+  margin-bottom: 1rem;
+}
+
+.search-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
   margin-bottom: 2rem;
+}
+
+.search-filters input,
+.search-filters select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: .8rem 1rem;
+  color: #fff;
+  font-size: .95rem;
+  -webkit-appearance: none; /* Remove default arrow */
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%239fb2cf" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+}
+
+.search-filters input::placeholder {
+  color: #9fb2cf;
 }
 
 .movie-grid {
