@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 export interface Member {
@@ -12,7 +12,7 @@ export interface Member {
 @Component({
   selector: 'app-manage-members',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
   templateUrl: './manage-members.component.html',
   styleUrls: ['./manage-members.component.scss']
 })
