@@ -1,0 +1,99 @@
+/* src/app/home/home.component.scss */
+:host { display: block; height: 100vh; color: #e6eef8; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+
+.home-container {
+  display: flex;
+  height: 100%;
+  background: linear-gradient(135deg, #0f172a 0%, #071027 100%);
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.02);
+  padding: 1.5rem;
+  border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 2rem;
+}
+
+.brand .logo { width: 44px; height: 44px; flex: 0 0 44px; }
+.brand h1 { font-size: 1.25rem; margin: 0; letter-spacing: .2px; color: #fff; }
+
+.nav-group {
+  margin-bottom: 2rem;
+}
+
+.nav-group h2 {
+  font-size: .8rem;
+  color: #9fb2cf;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: .75rem;
+}
+
+.nav-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-group li a {
+  display: block;
+  padding: .6rem 1rem;
+  color: #e6eef8;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background .2s;
+}
+
+.nav-group li a:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.main-header input[type="search"] {
+  background: rgba(255,255,255,0.03);
+  border: none;
+  outline: none;
+  color: #e6eef8;
+  width: 100%;
+  max-width: 400px;
+  font-size: .95rem;
+  padding: .6rem 1rem;
+  border-radius: 10px;
+}
+
+.user-profile {
+  margin-left: auto;
+}
+
+.user-profile button {
+  background: transparent;
+  border: none;
+  color: #9fb2cf;
+  cursor: pointer;
+}
+
+.user-profile svg { width: 24px; height: 24px; }
+
+.content {
+  padding: 2rem;
+}
