@@ -1,0 +1,49 @@
+<div class="browse-container">
+  <h1>Browse Movies & Series</h1>
+
+  <div class="movie-grid">
+    <div class="movie-card" *ngFor="let movie of movies" (click)="openMovieDetails(movie)">
+      <img [src]="movie.poster_url" [alt]="movie.content_name">
+    </div>
+  </div>
+
+  <!-- Movie Details Modal -->
+  <div class="modal-overlay" *ngIf="isModalVisible" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="closeModal()" aria-label="Close modal">&times;</button>
+
+      <div *ngIf="isModalLoading" class="modal-loading">
+        <p>Loading...</p>
+      </div>
+
+      <div class="modal-body" *ngIf="selectedMovieDetails && selectedMovieDetails.details.length > 0 && !isModalLoading">
+        <div class="poster-container">
+          <a [href]="selectedMovieDetails.details[0].IMDB_link" target="_blank">
+            <img [src]="selectedMovieDetails.details[0].poster_url" [alt]="selectedMovieDetails.details[0].content_name">
+          </a>
+        </div>
+        <div class="details-container">
+          <h2>{{ selectedMovieDetails.details[0].content_name }}</h2>
+          <p><strong>Release Date:</strong> {{ selectedMovieDetails.details[0].release_date | date:'longDate' }}</p>
+          <p><strong>Genre:</strong> {{ selectedMovieDetails.details[0].genre }}</p>
+          <p><strong>Director:</strong> {{ selectedMovieDetails.details[0].director }}</p>
+          <p><strong>Cast:</strong> {{ selectedMovieDetails.details[0].cast }}</p>
+          @if (selectedMovieDetails.details[0].awards){
+            <p><strong>Awards:</strong> {{ selectedMovieDetails.details[0].awards }}</p>
+          }
+
+          <button class="play-button">Play</button>
+
+          <div class="sequels-container" *ngIf="selectedMovieDetails.sequels.length > 0">
+            <h3>Sequels</h3>
+            <div class="sequel-grid">
+              <div class="sequel-card" *ngFor="let sequel of selectedMovieDetails.sequels" (click)="openMovieDetails(sequel)">
+                <img [src]="sequel.poster_url" alt="Sequel Poster">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

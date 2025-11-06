@@ -1,0 +1,66 @@
+/* src/app/admin/manage-members/manage-members.component.scss */
+:host { display: block; padding: 2rem; }
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+h1 { font-size: 1.75rem; color: #fff; margin: 0; }
+
+.btn {
+  background: linear-gradient(90deg,#1db954,#18a54b);
+  border: none;
+  padding: .65rem 1rem;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.table-container {
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  text-align: left;
+  padding-bottom: 1rem;
+  color: #9fb2cf;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+tbody td {
+  padding: .8rem 0;
+}
+
+.actions {
+  display: flex;
+  gap: .5rem;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: #9fb2cf;
+  cursor: pointer;
+}
+
+.btn-icon.btn-danger { color: #ffb4b4; }
+
+.btn-icon svg { width: 20px; height: 20px; }
