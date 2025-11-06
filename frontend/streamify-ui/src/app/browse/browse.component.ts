@@ -61,21 +61,33 @@ export class BrowseComponent implements OnInit {
   }
 
   fetchMovies(): void {
-    let params = new HttpParams();
-    const formValues = this.searchForm.value;
+    console.log('Starting fetchMovies');
+    try {
+      let params = new HttpParams();
+      const formValues = this.searchForm.value;
 
-    Object.keys(formValues).forEach(key => {
-      const value = formValues[key];
-      if (value) {
-        params = params.append(key, value);
-      }
-    });
-
-    this.http.get<Movie[]>(`${this.apiUrl}/browse/movies`, { params })
-      .subscribe(movies => {
-        this.movies = movies;
-        this.cdr.detectChanges();
+      Object.keys(formValues).forEach(key => {
+        const value = formValues[key];
+        if (value) {
+          params = params.append(key, value);
+        }
       });
+
+      console.log(`Making request to ${this.apiUrl}/browse/movies with params: ${params.toString()}`);
+      this.http.get<Movie[]>(`${this.apiUrl}/browse/movies`, { params })
+        .subscribe({
+          next: movies => {
+            this.movies = movies;
+            this.cdr.detectChanges();
+            console.log('Successfully fetched and updated movies.');
+          },
+          error: err => {
+            console.error('Error fetching movies:', err);
+          }
+        });
+    } catch (e) {
+      console.error('An unexpected error occurred in fetchMovies:', e);
+    }
   }
 
   openMovieDetails(movie: Movie | Sequel): void {
