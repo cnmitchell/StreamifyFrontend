@@ -1,0 +1,17 @@
+<h2>Streaming History</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Content Name</th>
+      <th>Episode</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of streamingHistory">
+      <td>{{ item.content_name }}</td>
+      <td>{{ item.episode_id || 'N/A' }}</td>
+      <td>{{ item.timestamp | date:'medium' }}</td>
+    </tr>
+  </tbody>
+</table>

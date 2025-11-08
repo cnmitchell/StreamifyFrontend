@@ -47,9 +47,12 @@
           @if (password?.errors?.['required']) {
           <small>Password is required</small>
           }
-          @if (password?.errors?.['minlength']) {
-          <small>Minimum 6 characters</small>
-          }
+        </div>
+        }
+
+        @if (loginError) {
+        <div class="error">
+          <small>{{ loginError }}</small>
         </div>
         }
 
