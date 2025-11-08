@@ -3,16 +3,21 @@
 <!-- Movie List -->
 <div class = "top-ten-container">
   <table>
-    <tr>
-      <th>Content Id</th>
-      <th>Title</th>
-    </tr>
+    <thead>
+      <tr>
+        <th>Content Id</th>
+        <th>Title</th>
+        <th>Amount Streamed</th>
+      </tr>
+    </thead>
 
-    <tr *ngFor="let t of topTen">
-      <td>{{t.content_id}}</td>
-      <td>{{t.content_name}}</td>
-      <td>
-    </tr>
+    <tbody *ngIf="topTen.length > 0">
+      <tr *ngFor="let t of topTen">
+        <td>{{t.content_id}}</td>
+        <td>{{t.content_name}}</td>
+        <td>{{t.stream_amount}}</td>
+      </tr>
+    </tbody>
   </table>
 </div>
 

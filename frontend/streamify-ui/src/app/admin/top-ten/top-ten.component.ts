@@ -2,8 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Movie} from '../../browse/browse.component';
 
+export interface TopTen {
+  content_id: string;
+  content_name: string;
+  stream_amount: number;
+
+}
 
 @Component({
   selector: 'app-top-ten',
@@ -15,7 +20,7 @@ import {Movie} from '../../browse/browse.component';
 
 export class TopTenComponent implements OnInit {
 
-  topTen: Movie[] = [];
+  topTen: TopTen[] = [];
   apiUrl = "/api/content";
 
   constructor(private http: HttpClient) {}
@@ -25,9 +30,10 @@ export class TopTenComponent implements OnInit {
   }
 
   loadTopTen() {
-    this.http.get<Movie[]>(`${this.apiUrl}/top-ten-streamed`)
+    this.http.get<TopTen[]>(`${this.apiUrl}/top-ten-streamed`)
       .subscribe(data => {
         this.topTen = data;
+        console.log(this.topTen);
       });
   }
 }
