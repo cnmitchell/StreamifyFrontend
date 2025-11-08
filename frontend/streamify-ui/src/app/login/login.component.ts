@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
     }
     this.loading = true;
     const payload = this.form.value;
-    // Replace with your auth call
     console.log('Login attempt', payload);
     setTimeout(() => {
       this.loading = false;

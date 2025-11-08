@@ -1,21 +1,29 @@
 <div class="browse-container">
-  <h1>Browse Movies & Series</h1>
+  <form [formGroup]="searchForm">
+    <div class="browse-header">
+      <h1>Browse Movies & Series</h1>
+      <div class="checkbox-filter">
+        <input type="checkbox" id="awardWinning" formControlName="awardWinning">
+        <label for="awardWinning">Award Winning</label>
+      </div>
+    </div>
 
-  <form [formGroup]="searchForm" class="search-filters">
-    <input formControlName="keyword" placeholder="Search by keyword..." (input)="fetchMovies()">
-    <select formControlName="genre" (change)="fetchMovies()">
-      <option value="">All Genres</option>
-      <option value="thriller">Thriller</option>
-      <option value="horror">Horror</option>
-      <option value="comedy">Comedy</option>
-      <option value="romance">Romance</option>
-      <option value="drama">Drama</option>
-      <option value="action">Action</option>
-      <option value="anime">Anime</option>
-      <option value="adventure">Adventure</option>
-    </select>
-    <input formControlName="actor" placeholder="Filter by actor..." (input)="fetchMovies()">
-    <input formControlName="director" placeholder="Filter by director..." (input)="fetchMovies()">
+    <div class="search-filters">
+      <input formControlName="keyword" placeholder="Search by keyword...">
+      <select formControlName="genre">
+        <option value="">All Genres</option>
+        <option value="thriller">Thriller</option>
+        <option value="horror">Horror</option>
+        <option value="comedy">Comedy</option>
+        <option value="romance">Romance</option>
+        <option value="drama">Drama</option>
+        <option value="action">Action</option>
+        <option value="anime">Anime</option>
+        <option value="adventure">Adventure</option>
+      </select>
+      <input formControlName="actor" placeholder="Filter by actor...">
+      <input formControlName="director" placeholder="Filter by director...">
+    </div>
   </form>
 
   <div class="movie-grid">

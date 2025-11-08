@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
-// Interfaces (Sequel, MovieDetails, etc.) remain the same
 export interface Sequel {
   content_id: string;
   poster_url: string;
@@ -51,32 +51,39 @@ export class BrowseComponent implements OnInit {
       keyword: [''],
       genre: [''],
       actor: [''],
-      director: ['']
+      director: [''],
+      awardWinning: [false]
     });
   }
 
   ngOnInit(): void {
     this.fetchMovies();
-    // Removed the valueChanges subscription
+    this.searchForm.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.fetchMovies();
+    });
   }
 
   fetchMovies(): void {
-    console.log('Starting fetchMovies');
+    console.log('Starting fetchMovies with form values:', this.searchForm.value);
     try {
-      let params = new HttpParams();
       const formValues = this.searchForm.value;
+      const endpoint = `${this.apiUrl}/browse/movies`;
+      let params = new HttpParams();
 
       Object.keys(formValues).forEach(key => {
         const value = formValues[key];
         if (value) {
-          params = params.append(key, value);
+          params = params.append(key, value.toString());
         }
       });
 
-      console.log(`Making request to ${this.apiUrl}/browse/movies with params: ${params.toString()}`);
-      this.http.get<Movie[]>(`${this.apiUrl}/browse/movies`, { params })
+      console.log(`Making request to ${endpoint} with params: ${params.toString()}`);
+      this.http.get<Movie[]>(endpoint, { params })
         .subscribe({
           next: movies => {
+            console.log('Received data from backend:', JSON.stringify(movies, null, 2));
             this.movies = movies;
             this.cdr.detectChanges();
             console.log('Successfully fetched and updated movies.');

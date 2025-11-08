@@ -1,4 +1,3 @@
-/* src/app/login/login.component.scss */
 :host { display: block; height: 100vh; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
 
 .bg {
@@ -11,13 +10,12 @@
   padding: 2rem;
 }
 
-/* Make the container larger */
 .container { width: 100%; max-width: 480px; }
 
 .card {
   background: rgba(255,255,255,0.04);
-  border-radius: 16px; /* Slightly larger radius */
-  padding: 2.5rem; /* Increased padding */
+  border-radius: 16px;
+  padding: 2.5rem;
   box-shadow: 0 8px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
   backdrop-filter: blur(8px);
   color: #e6eef8;
@@ -32,10 +30,10 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-top: 1rem; /* Increased margin */
+  margin-top: 1rem;
   background: rgba(255,255,255,0.03);
-  border-radius: 12px; /* Slightly larger radius */
-  padding: .8rem 1rem; /* Increased padding */
+  border-radius: 12px;
+  padding: .8rem 1rem;
 }
 
 .field input {
@@ -44,7 +42,7 @@
   outline: none;
   color: #e6eef8;
   width: 100%;
-  font-size: 1.05rem; /* Increased font size */
+  font-size: 1.05rem;
   padding: 0 .5rem;
 }
 
@@ -71,11 +69,11 @@
 .btn {
   background: linear-gradient(90deg,#1db954,#18a54b);
   border: none;
-  padding: .8rem 1.2rem; /* Increased padding */
-  border-radius: 12px; /* Slightly larger radius */
+  padding: .8rem 1.2rem;
+  border-radius: 12px;
   color: white;
   font-weight: 600;
-  font-size: 1rem; /* Added font size */
+  font-size: 1rem;
   cursor: pointer;
 }
 .btn[disabled] { opacity: .7; cursor: not-allowed; }
@@ -89,6 +87,6 @@
 .btn-google { display:flex; align-items:center; gap:.6rem; background: rgba(255,255,255,0.03); border-radius:12px; padding:.6rem 1rem; color:#fff; border:none; cursor:pointer; font-size: .95rem;}
 .btn-google svg { width:20px; height:20px; }
 
-@media (max-width: 480px) { /* Adjusted media query */
+@media (max-width: 480px) {
   .card { padding: 2rem; border-radius: 12px; }
 }

@@ -1,4 +1,3 @@
-<!-- src/app/login/login.component.html -->
 <div class="bg">
   <div class="container">
     <div class="card">
@@ -31,13 +30,11 @@
 
         <label class="field">
           <span class="icon-left" aria-hidden="true">
-            <!-- lock icon -->
             <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 8h-1V6a4 4 0 10-8 0v2H7a2 2 0 00-2 2v8a2 2 0 002 2h10a2 2 0 002-2v-8a2 2 0 00-2-2zm-6 8a2 2 0 112 2 2 2 0 01-2-2zm3-8H8V6a3 3 0 016 0v2z"/></svg>
           </span>
 
           <input [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Password" aria-label="Password" />
           <button type="button" class="icon-right" (click)="toggleHide()" [attr.aria-pressed]="!hide" aria-label="Toggle password visibility">
-            <!-- eye / eye-off icons -->
             @if (hide) {
             <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 5c5 0 9.3 3.1 11 7-1.7 3.9-6 7-11 7S2.7 15.9 1 12c1.7-3.9 6-7 11-7zm0 12a5 5 0 100-10 5 5 0 000 10z"/></svg>
             } @else {
