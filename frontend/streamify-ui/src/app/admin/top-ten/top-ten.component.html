@@ -1,0 +1,20 @@
+<h2>Top Ten Streamed</h2>
+
+<!-- Movie List -->
+<div class = "top-ten-container">
+  <table>
+    <tr>
+      <th>Content Id</th>
+      <th>Title</th>
+    </tr>
+
+    <tr *ngFor="let t of topTen">
+      <td>{{t.content_id}}</td>
+      <td>{{t.content_name}}</td>
+      <td>
+    </tr>
+  </table>
+</div>
+
+<hr>
+

@@ -1,4 +1,4 @@
-/* src/app/admin/manage-movies/manage-movies.component.scss */
+/* src/app/admin/top-ten/top-ten.component.scss */
 
 :host { display: block; padding: 2rem; }
 
@@ -9,13 +9,13 @@
   margin-bottom: 2rem;
 }
 
-.movie-list-container{
+.top-ten-container{
   height: 400px;
   overflow-y: auto;
   border: 1px solid #ccc;
 }
 
-.movie-list-container table th {
+.top-ten-container table th {
   text-align: center;
   position: sticky;
   background: rgba(255,255,255,0.02);

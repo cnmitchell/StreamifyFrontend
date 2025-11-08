@@ -10,6 +10,8 @@ export const routes: Routes = [
       { path: 'browse', loadComponent: () => import('./browse/browse.component').then(m => m.BrowseComponent) },
       { path: 'admin/manage-members', loadComponent: () => import('./admin/manage-members/manage-members.component').then(m => m.ManageMembersComponent) },
       { path: 'admin/manage-movies', loadComponent: () => import('./admin/manage-movies/manage-movies.component').then(m => m.ManageMoviesComponent) },
+      { path: 'admin/top-ten', loadComponent: () => import('./admin/top-ten/top-ten.component').then(m => m.TopTenComponent) },
+
     ]
   },
 ];

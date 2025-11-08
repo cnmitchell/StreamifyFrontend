@@ -1,6 +1,6 @@
 import {Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Movie} from '../../browse/browse.component';
 
