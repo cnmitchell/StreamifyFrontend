@@ -11,15 +11,14 @@
       </tr>
     </thead>
 
-    <tbody *ngIf="topTen.length > 0">
+    <tbody *ngIf="topTen$ | async as topTen">
       <tr *ngFor="let t of topTen">
         <td>{{t.content_id}}</td>
         <td>{{t.content_name}}</td>
-        <td>{{t.stream_amount}}</td>
+        <td>{{t.stream_count}}</td>
       </tr>
     </tbody>
   </table>
 </div>
 
 <hr>
-

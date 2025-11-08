@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {Observable} from 'rxjs';
 
 export interface TopTen {
   content_id: string;
   content_name: string;
-  stream_amount: number;
+  stream_count: number;
 
 }
 
@@ -20,7 +21,7 @@ export interface TopTen {
 
 export class TopTenComponent implements OnInit {
 
-  topTen: TopTen[] = [];
+  topTen$: Observable<TopTen[]> | undefined;
   apiUrl = "/api/content";
 
   constructor(private http: HttpClient) {}
@@ -30,10 +31,6 @@ export class TopTenComponent implements OnInit {
   }
 
   loadTopTen() {
-    this.http.get<TopTen[]>(`${this.apiUrl}/top-ten-streamed`)
-      .subscribe(data => {
-        this.topTen = data;
-        console.log(this.topTen);
-      });
+    this.topTen$ = this.http.get<TopTen[]>(`${this.apiUrl}/top-ten-streamed`);
   }
 }
