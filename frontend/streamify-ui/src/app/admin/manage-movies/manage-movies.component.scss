@@ -1,0 +1,25 @@
+/* src/app/admin/manage-movies/manage-movies.component.scss */
+//this is just a copy and paste of manage members .scss except i changed the bit above
+
+:host { display: block; padding: 2rem; }
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.movie-list-container{
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+.movie-list-container table th {
+  text-align: center;
+  position: sticky;
+  background: rgba(255,255,255,0.02);
+  top: 0;
+  z-index: 1;
+}

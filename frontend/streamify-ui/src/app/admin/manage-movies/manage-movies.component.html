@@ -1,0 +1,44 @@
+<h2>Movie Manager</h2>
+
+<!-- Movie List -->
+<div class = "movie-list-container">
+  <table>
+    <tr>
+      <th>Content Id</th>
+      <th>Title</th>
+    </tr>
+
+    <tr *ngFor="let m of movies">
+      <td>{{m.content_id}}</td>
+      <td>{{m.content_name}}</td>
+      <td>
+        <button (click)="startEditMovie(m)">Edit</button>
+        <button (click)="deleteMovie(m.content_id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<hr>
+
+<!-- add new movie -->
+<h3>Add Movie</h3>
+<input [(ngModel)]="newMovie.title" placeholder="Title">
+<input [(ngModel)]="newMovie.genre" placeholder="Genre">
+<input [(ngModel)]="newMovie.actor" placeholder="Actors">
+<input [(ngModel)]="newMovie.director" placeholder="Director">
+<input [(ngModel)]="newMovie.keyword" placeholder="keyword">
+<button (click)="addMovie()">Add</button>
+
+<hr>
+
+<!-- edit movie -->
+<div *ngIf="selectedMovie">
+  <h3>Add Movie</h3>
+  <input [(ngModel)]="selectedMovie.title" placeholder="Title">
+  <input [(ngModel)]="selectedMovie.genre" placeholder="Genre">
+  <input [(ngModel)]="selectedMovie.actor" placeholder="Actors">
+  <input [(ngModel)]="selectedMovie.director" placeholder="Director">
+  <input [(ngModel)]="selectedMovie.keyword" placeholder="keyword">
+  <button (click)="saveEditMovie()">Save</button>
+</div>
