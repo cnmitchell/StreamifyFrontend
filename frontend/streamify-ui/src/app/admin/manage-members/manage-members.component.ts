@@ -6,7 +6,7 @@ export interface Member {
   email: string;
   member_id: string;
   subscription_name: string;
-  name: string; // Assuming name is part of the member data from the backend
+  name: string;
 }
 
 @Component({
@@ -30,17 +30,15 @@ export class ManageMembersComponent implements OnInit {
     this.http.get<Member[]>(`${this.apiUrl}/members`)
       .subscribe(members => {
         this.members = members;
-        this.cdr.detectChanges(); // Manually trigger change detection
+        this.cdr.detectChanges();
       });
   }
 
   addMember(): void {
-    // Logic to add a new member will be implemented here
     console.log('Add member clicked');
   }
 
   removeMember(member: Member): void {
-    // Logic to remove a member will be implemented here
     console.log('Remove member:', member);
   }
 }
