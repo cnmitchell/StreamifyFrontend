@@ -1,0 +1,20 @@
+canvas {
+  display: block;
+  max-width: 100%;
+  margin-bottom: auto;
+}
+
+.trends-container{
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 6px;
+  border-bottom: 1px solid #ccc;
+}
