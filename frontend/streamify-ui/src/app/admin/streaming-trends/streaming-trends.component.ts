@@ -3,6 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js/auto';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {Observable} from 'rxjs';
+
+export interface Trends {
+  content_id: string;
+  content_name: string;
+}
+
 
 @Component({
   selector: 'app-streaming-trends',
@@ -15,23 +22,20 @@ import {FormsModule} from '@angular/forms';
 export class StreamingTrendsComponent implements OnInit {
 
   apiUrl = "/api/content"
-  trends: any[] = [];
+  trends$: Observable<Trends[]> | undefined;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.loadTrends
+    this.loadTrends()
   }
 
   loadTrends(){
-    this.http.get<any[]>(`${this.apiUrl}/last-24h-trends`)
-      .subscribe(data =>{
-        this.trends = data;
-        console.log(this.trends);
-        this.buildChart();
-      })
+    this.trends$ = this.http.get<Trends[]>(`${this.apiUrl}/last-24h-trends`);
+    console.log(this.trends$);
   }
 
+  /*
   buildChart() {
     const labels = this.trends.map(item => item.title);
     const dataPoints = this.trends.map(item => item.stream_count);
@@ -53,5 +57,7 @@ export class StreamingTrendsComponent implements OnInit {
       }
     });
   }
+
+   */
 
 }
