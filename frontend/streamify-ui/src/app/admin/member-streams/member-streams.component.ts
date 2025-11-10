@@ -50,5 +50,4 @@ export class MemberStreamsComponent implements OnInit {
       console.log("loading members");
     });
   }
-
 }

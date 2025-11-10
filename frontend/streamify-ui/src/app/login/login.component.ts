@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +53,7 @@ export class LoginComponent implements OnInit {
     this.http.post('/api/content/login', payload, { responseType: 'text' }).subscribe({
       next: () => {
         this.loading = false;
+        this.authService.setEmail(payload.email);
         this.router.navigate(['/home']);
         this.cdr.detectChanges();
       },
