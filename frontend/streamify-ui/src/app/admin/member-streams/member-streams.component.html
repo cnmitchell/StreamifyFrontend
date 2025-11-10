@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<h2>View Members Who Streamed a Movie</h2>
 
-</body>
-</html>
+<label for="movieSelect">Select a Movie:</label>
+<select [(ngModel)]="selectedMovieId" (ngModelChange)="loadMembers()">
+  <tbody *ngIf="movies$ | async as movies">
+    <option *ngFor="let m of movies" [value]="m.content_id">
+      {{m.content_name}}
+    </option>
+  </tbody>
+</select>
+
+<button (click)="loadMembers()">Load Members</button>
+
+<hr>
+
+<div *ngIf="members.length > 0">
+  <h3>Streamed by:</h3>
+  <ul>
+    <li *ngFor="let m of members">
+      {{m.name}} (Member id: {{m.member_id}})
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="selectedMovieId && members.length === 0">
+  No Members have streamed this movie
+</div>
