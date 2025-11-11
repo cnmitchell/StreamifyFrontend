@@ -2,7 +2,7 @@ import {Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Movie} from '../../member/browse/browse.component';
+import {Content} from '../../member/browse/browse.component';
 
 
 @Component({
@@ -15,7 +15,7 @@ import {Movie} from '../../member/browse/browse.component';
 })
 export class ManageMoviesComponent implements OnInit {
 
-  movies: Movie[] = [];
+  movies: Content[] = [];
   newMovie: any = { title: "", genre: "", director: "", cast: "", awards: [] };
   selectedMovie: any = null;
   apiUrl = "/api/content"
@@ -32,7 +32,7 @@ export class ManageMoviesComponent implements OnInit {
       let params = new HttpParams();
 
       console.log(`Making request to ${this.apiUrl}/browse/movies with params: ${params.toString()}`);
-      this.http.get<Movie[]>(`${this.apiUrl}/browse/movies`, { params })
+      this.http.get<Content[]>(`${this.apiUrl}/browse/movies`, { params })
         .subscribe({
           next: movies => {
             this.movies = movies;

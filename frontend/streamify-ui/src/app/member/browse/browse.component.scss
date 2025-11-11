@@ -5,6 +5,28 @@
   overflow-y: auto;
 }
 
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  background: transparent;
+  border: none;
+  color: #9fb2cf;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-bottom-color 0.2s;
+}
+
+.tabs button.active {
+  color: #fff;
+  border-bottom-color: #1db954;
+}
+
 .browse-header {
   display: flex;
   justify-content: space-between;
@@ -184,6 +206,7 @@ h1 {
   font-size: 1.1rem;
   margin-bottom: 1rem;
 }
+
 
 .play-button {
   background: linear-gradient(90deg,#1db954,#18a54b);

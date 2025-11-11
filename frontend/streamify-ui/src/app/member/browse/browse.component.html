@@ -1,10 +1,19 @@
 <div class="browse-container">
+  <div class="tabs">
+    <button (click)="selectTab('movies')" [class.active]="activeTab === 'movies'">Movies</button>
+    <button (click)="selectTab('series')" [class.active]="activeTab === 'series'">Series</button>
+  </div>
+
   <form [formGroup]="searchForm">
     <div class="browse-header">
-      <h1>Browse Movies & Series</h1>
+      <h1>Browse {{ activeTab === 'movies' ? 'Movies' : 'Series' }}</h1>
       <div class="checkbox-filter">
         <input type="checkbox" id="awardWinning" formControlName="awardWinning">
         <label for="awardWinning">Award Winning</label>
+      </div>
+      <div class="checkbox-filter" *ngIf="activeTab === 'series'">
+        <input type="checkbox" id="neverWatched" formControlName="neverWatched">
+        <label for="neverWatched">Never Watched</label>
       </div>
     </div>
 
@@ -20,19 +29,31 @@
         <option value="action">Action</option>
         <option value="anime">Anime</option>
         <option value="adventure">Adventure</option>
+        <option value="musical">Musical</option>
+        <option value="fantasy">Fantasy</option>
       </select>
       <input formControlName="actor" placeholder="Filter by actor...">
       <input formControlName="director" placeholder="Filter by director...">
     </div>
   </form>
 
-  <div class="movie-grid">
-    <div class="movie-card" *ngFor="let movie of movies" (click)="openMovieDetails(movie)">
-      <img [src]="movie.poster_url" [alt]="movie.content_name">
+  <div *ngIf="activeTab === 'movies'">
+    <div class="movie-grid">
+      <div class="movie-card" *ngFor="let movie of movies" (click)="openMovieDetails(movie)">
+        <img [src]="movie.poster_url" [alt]="movie.content_name">
+      </div>
     </div>
   </div>
 
-  <!-- Movie Details Modal -->
+  <div *ngIf="activeTab === 'series'">
+    <div class="movie-grid">
+      <div class="movie-card" *ngFor="let seriesItem of series" (click)="openSeriesDetails(seriesItem)">
+        <img [src]="seriesItem.poster_url" [alt]="seriesItem.content_name">
+      </div>
+    </div>
+  </div>
+
+  <!-- Details Modal -->
   <div class="modal-overlay" *ngIf="isModalVisible" (click)="closeModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <button class="close-button" (click)="closeModal()" aria-label="Close modal">&times;</button>
@@ -41,31 +62,68 @@
         <p>Loading...</p>
       </div>
 
-      <div class="modal-body" *ngIf="selectedMovieDetails && selectedMovieDetails.details.length > 0 && !isModalLoading">
+      <div class="modal-body" *ngIf="selectedDetails && !isModalLoading">
         <div class="poster-container">
-          <a [href]="selectedMovieDetails.details[0].IMDB_link" target="_blank">
-            <img [src]="selectedMovieDetails.details[0].poster_url" [alt]="selectedMovieDetails.details[0].content_name">
+          <a [href]="selectedDetails.details[0].IMDB_link" target="_blank">
+            <img [src]="selectedDetails.details[0].poster_url" [alt]="selectedDetails.details[0].content_name">
           </a>
         </div>
         <div class="details-container">
-          <h2>{{ selectedMovieDetails.details[0].content_name }}</h2>
-          <p><strong>Release Date:</strong> {{ selectedMovieDetails.details[0].release_date | date:'longDate' }}</p>
-          <p><strong>Genre:</strong> {{ selectedMovieDetails.details[0].genre }}</p>
-          <p><strong>Director:</strong> {{ selectedMovieDetails.details[0].director }}</p>
-          <p><strong>Cast:</strong> {{ selectedMovieDetails.details[0].cast }}</p>
-          @if (selectedMovieDetails.details[0].awards) {
-            <p><strong>Awards:</strong> {{ selectedMovieDetails.details[0].awards }}</p>
+          <h2>{{ selectedDetails.details[0].content_name }}</h2>
+          <p><strong>Release Date:</strong> {{ selectedDetails.details[0].release_date | date:'longDate' }}</p>
+          <p><strong>Genre:</strong> {{ selectedDetails.details[0].genre }}</p>
+          <p><strong>Director:</strong> {{ selectedDetails.details[0].director }}</p>
+          <p><strong>Cast:</strong> {{ selectedDetails.details[0].cast }}</p>
+          @if (selectedDetails.details[0].awards) {
+            <p><strong>Awards:</strong> {{ selectedDetails.details[0].awards }}</p>
           }
           <button class="play-button">Play</button>
 
-          <div class="sequels-container" *ngIf="selectedMovieDetails.sequels.length > 0">
+          <div class="sequels-container" *ngIf="selectedDetails.sequels && selectedDetails.sequels.length > 0">
             <h3>Sequels</h3>
             <div class="sequel-grid">
-              <div class="sequel-card" *ngFor="let sequel of selectedMovieDetails.sequels" (click)="openMovieDetails(sequel)">
+              <div class="sequel-card" *ngFor="let sequel of selectedDetails.sequels" (click)="openMovieDetails(sequel)">
                 <img [src]="sequel.poster_url" alt="Sequel Poster">
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="modal-body" *ngIf="selectedSeriesDetails && !isModalLoading">
+        <div class="poster-container">
+          <a [href]="selectedSeriesDetails.details[0].IMDB_link" target="_blank">
+            <img [src]="selectedSeriesDetails.details[0].poster_url" [alt]="selectedSeriesDetails.details[0].content_name">
+          </a>
+        </div>
+        <div class="details-container">
+          <h2>{{ selectedSeriesDetails.details[0].content_name }}</h2>
+          <p><strong>Release Date:</strong> {{ selectedSeriesDetails.details[0].release_date | date:'longDate' }}</p>
+          <p><strong>Genre:</strong> {{ selectedSeriesDetails.details[0].genre }}</p>
+          <p><strong>Director:</strong> {{ selectedSeriesDetails.details[0].director }}</p>
+          <p><strong>Cast:</strong> {{ selectedSeriesDetails.details[0].cast }}</p>
+          @if (selectedSeriesDetails.details[0].awards) {
+            <p><strong>Awards:</strong> {{ selectedSeriesDetails.details[0].awards }}</p>
+          }
+
+          <div class="episode-selector" *ngIf="seasons.length > 0">
+            <div class="season-selector">
+              <label for="season-select"><strong>Season:</strong></label>
+              <select id="season-select" [(ngModel)]="selectedSeason" (ngModelChange)="onSeasonChange($event)">
+                <option *ngFor="let season of seasons" [value]="season">{{ 'Season ' + season }}</option>
+              </select>
+            </div>
+            <div class="episode-selector" *ngIf="episodes.length > 0">
+              <label for="episode-select"><strong>Episode:</strong></label>
+              <select id="episode-select" [(ngModel)]="selectedEpisode" (ngModelChange)="onEpisodeChange($event)">
+                <option *ngFor="let episode of episodes" [ngValue]="episode">
+                  {{ 'Episode ' + episode.episode_number + ': ' + episode.title }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <button class="play-button">Play</button>
         </div>
       </div>
     </div>
