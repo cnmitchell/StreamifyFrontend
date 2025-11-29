@@ -12,6 +12,8 @@ export interface Movie{
 export interface Member{
   member_id: string;
   name: string;
+  email: string;
+  timestamp: string;
 }
 
 

@@ -3,9 +3,9 @@
 <label for="movieSelect">Select a Movie:</label>
 <select [(ngModel)]="selectedMovieId" (ngModelChange)="loadMembers()">
   <tbody *ngIf="movies$ | async as movies">
-    <option *ngFor="let m of movies" [value]="m.content_id">
-      {{m.content_name}}
-    </option>
+  <option *ngFor="let m of movies" [value]="m.content_id">
+    {{m.content_name}}
+  </option>
   </tbody>
 </select>
 
@@ -15,11 +15,24 @@
 
 <div *ngIf="members.length > 0">
   <h3>Streamed by:</h3>
-  <ul>
-    <li *ngFor="let m of members">
-      {{m.name}} (Member id: {{m.member_id}})
-    </li>
-  </ul>
+  <table class="members-table">
+    <thead>
+    <tr>
+      <th>Member ID</th>
+      <th>Name</th>
+      <th>email</th>
+      <th>Time Stamp</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let m of members">
+      <td>{{m.member_id}}</td>
+      <td>{{m.name}}</td>
+      <td>{{m.email}}</td>
+      <td>{{m.timestamp}}</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 <div *ngIf="selectedMovieId && members.length === 0">
