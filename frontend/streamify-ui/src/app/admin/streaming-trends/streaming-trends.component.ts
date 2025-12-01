@@ -6,8 +6,10 @@ import {FormsModule} from '@angular/forms';
 import {Observable} from 'rxjs';
 
 export interface Trends {
-  content_id: string;
+  stream_id: string;
   content_name: string;
+  timestamp: string;
+  email: string;
 }
 
 

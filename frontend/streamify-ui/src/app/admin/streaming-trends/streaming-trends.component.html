@@ -1,16 +1,23 @@
 <h2>Streaming Trends (last 24 hours)</h2>
 
+<hr>
 
 <div class = "trends-container">
   <table>
     <thead>
-      <th>Content id</th>
-      <th>title</th>
+    <tr>
+      <th>Tite</th>
+      <th>Stream ID</th>
+      <th>Email</th>
+      <th>Time Stamp</th>
+    </tr>
     </thead>
     <tbody *ngIf="trends$ | async as trends">
       <tr *ngFor="let t of trends">
-        <td>{{t.content_id}}</td>
         <td>{{t.content_name}}</td>
+        <td>{{t.stream_id}}</td>
+        <td>{{t.email}}</td>
+        <td>{{t.timestamp}}</td>
       </tr>
     </tbody>
   </table>

@@ -7,9 +7,11 @@
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 1rem;
 }
 
 th, td {
-  padding: 6px;
+  padding: 0.5rem 0.75rem;
   border-bottom: 1px solid #ccc;
+  text-align: left;
 }
