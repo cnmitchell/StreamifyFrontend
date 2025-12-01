@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -34,7 +34,10 @@ export class MemberStreamsComponent implements OnInit {
   members: Member[] = [];
   selectedMovieId: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  isLoadingMembers = false;
+  hasRequestedMembers = false;
+
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadMovies()
@@ -43,13 +46,46 @@ export class MemberStreamsComponent implements OnInit {
   loadMovies() {
     this.movies$ = this.http.get<Movie[]>(`${this.apiUrl}/all-content`);
   }
-  loadMembers() {
-    if(!this.selectedMovieId) return;
 
-    this.http.get<Member[]>(`${this.apiUrl}/members-who-streamed?content_id=${this.selectedMovieId}`)
-    .subscribe(data => {
-      this.members = data;
-      console.log("loading members");
-    });
+  onMovieChange() {
+    this.loadMembersfor(this.selectedMovieId);
+  }
+
+  private loadMembersfor(movieId: string | null){
+    if (!movieId){
+      this.members = [];
+      this.hasRequestedMembers = false;
+      this.isLoadingMembers = false;
+      this.cdr.markForCheck();
+      return;
+    }
+
+    this.isLoadingMembers = true;
+    this.hasRequestedMembers = true;
+    this.members = [];
+
+    const requestedId = movieId;
+
+    this.http.get<Member[]>(`${this.apiUrl}/members-who-streamed?content_id=${requestedId}`)
+      .subscribe({
+        next: data => {
+          if (this.selectedMovieId !== requestedId){
+            console.log("ignored for", requestedId);
+            return
+          }
+          this.members = data;
+          this.isLoadingMembers = false;
+
+          this.cdr.markForCheck();
+
+        },
+        error: error => {
+          console.error(error);
+          if (this.selectedMovieId === requestedId){
+            this.isLoadingMembers = false;
+          }
+          this.cdr.markForCheck();
+        }
+      });
   }
 }
