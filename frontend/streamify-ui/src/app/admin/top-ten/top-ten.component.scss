@@ -7,16 +7,16 @@
   margin-bottom: 2rem;
 }
 
-.top-ten-container{
-  height: 400px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
+
+.top-ten-table{
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+
+  th,td{
+    border: 1px solid black;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
 }
 
-.top-ten-container table th {
-  text-align: center;
-  position: sticky;
-  background: rgba(255,255,255,0.02);
-  top: 0;
-  z-index: 1;
-}

@@ -8,6 +8,8 @@ export interface TopTen {
   content_id: string;
   content_name: string;
   stream_count: number;
+  genre: string;
+  release_date: string;
 
 }
 

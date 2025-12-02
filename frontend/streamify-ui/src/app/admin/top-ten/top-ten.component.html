@@ -2,12 +2,15 @@
 
 <!-- Movie List -->
 <div class = "top-ten-container">
-  <table>
+  <table class="top-ten-table">
     <thead>
       <tr>
         <th>Content Id</th>
         <th>Title</th>
+        <th>Genre</th>
+        <th>Release Date</th>
         <th>Amount Streamed</th>
+
       </tr>
     </thead>
 
@@ -15,6 +18,8 @@
       <tr *ngFor="let t of topTen">
         <td>{{t.content_id}}</td>
         <td>{{t.content_name}}</td>
+        <td>{{t.genre}}</td>
+        <td>{{t.release_date}}</td>
         <td>{{t.stream_count}}</td>
       </tr>
     </tbody>
