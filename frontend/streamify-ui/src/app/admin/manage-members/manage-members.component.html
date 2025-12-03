@@ -4,6 +4,119 @@
     <button class="btn" (click)="addMember()">Add Member</button>
   </header>
 
+  <div *ngIf="showAddForm" class="add-member-form">
+    <h2>Add Member</h2>
+    <form (ngSubmit)="submitNewMember()" #memberForm="ngForm">
+      <div class="form-row">
+        <label>
+          Name
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="newMember.name"
+            required/>
+        </label>
+
+        <label>
+          Email
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="newMember.email"
+            required/>
+        </label>
+      </div>
+
+
+      <div class="form-row">
+          <label>
+            Password
+            <input
+              type="password"
+              name="password"
+              [(ngModel)]="newMember.password"
+              required
+            />
+          </label>
+
+          <label>
+            Phone
+            <input
+              type="tel"
+              name="phone"
+              [(ngModel)]="newMember.phone"/>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            Street
+            <input
+              type="text"
+              name="street"
+              [(ngModel)]="newMember.street"/>
+          </label>
+
+          <label>
+            City
+            <input
+              type="text"
+              name="city"
+              [(ngModel)]="newMember.city"/>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            State
+            <input
+              type="text"
+              name="state"
+              [(ngModel)]="newMember.state"/>
+          </label>
+
+          <label>
+            Country
+            <input
+              type="text"
+              name="country"
+              [(ngModel)]="newMember.country"/>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <span>Subscription Type</span>
+          <label class="radio-option">
+            <input
+              type="radio"
+              name="subscription"
+              [(ngModel)]="newMember.subName"
+              value="Basic"/>
+            Basic
+          </label>
+
+          <label class="radio-option">
+            <input
+              type="radio"
+              name="subscription"
+              [(ngModel)]="newMember.subName"
+              value="Premium"/>
+            Premium
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit" [disabled]="memberForm.invalid">
+            Save
+          </button>
+          <button class="btn btn-close" type="button" (click)="cancelNewMember()">
+            Cancel
+          </button>
+        </div>
+    </form>
+  </div>
+
+
   <div class="table-container">
     <table>
       <thead>
