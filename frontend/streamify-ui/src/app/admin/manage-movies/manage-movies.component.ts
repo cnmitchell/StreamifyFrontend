@@ -6,12 +6,11 @@ import { Content } from '../../member/browse/browse.component';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 
-// Updated interfaces
 export interface PersonRequest {
   person_id?: string;
   name: string;
-  state?: string; // Changed from DOB
-  country?: string; // Changed from DOD
+  state?: string;
+  country?: string;
 }
 
 export interface AwardRequest {
@@ -66,13 +65,11 @@ export class ManageMoviesComponent implements OnInit {
   genres = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Documentary'];
   seasons: Season[] = [];
 
-  // Person search
   directorSearchResults: PersonRequest[] = [];
   castSearchResults: PersonRequest[][] = [[], [], []];
   private directorSearchTerms = new Subject<string>();
   private castSearchTerms: Subject<{ query: string; index: number }> [] = Array.from({length: 3}, () => new Subject());
 
-  // Flags for UI update
   directorNotFound: boolean = false;
   castNotFound: boolean[] = Array(3).fill(false);
 
@@ -89,7 +86,7 @@ export class ManageMoviesComponent implements OnInit {
         console.log('Inside director switchMap, term:', term);
         if (term.length < 2) {
           this.directorSearchResults = [];
-          this.directorNotFound = false; // Reset if term is too short
+          this.directorNotFound = false;
           this.cdr.detectChanges();
           return of([]);
         }
@@ -99,7 +96,6 @@ export class ManageMoviesComponent implements OnInit {
     ).subscribe(results => {
       console.log('Director search results:', results);
       this.directorSearchResults = results;
-      // Set directorNotFound based on results and current input term
       this.directorNotFound = results.length === 0 && this.newContent.directors[0].name.length > 1;
       console.log('directorNotFound after assignment:', this.directorNotFound);
       this.cdr.detectChanges();
@@ -116,7 +112,7 @@ export class ManageMoviesComponent implements OnInit {
           console.log(`Inside cast switchMap for index ${search.index}, term: ${search.query}`);
           if (search.query.length < 2) {
             this.castSearchResults[index] = [];
-            this.castNotFound[index] = false; // Reset if term is too short
+            this.castNotFound[index] = false;
             this.cdr.detectChanges();
             return of([]);
           }
@@ -138,13 +134,12 @@ export class ManageMoviesComponent implements OnInit {
     const term = (event.target as HTMLInputElement).value;
     console.log('Director input event, term:', term);
 
-    // Reset person_id and notFound flag if name changes after selection
     if (this.newContent.directors[0].person_id && this.newContent.directors[0].name !== term) {
       this.newContent.directors[0].person_id = undefined;
       this.newContent.directors[0].state = undefined;
       this.newContent.directors[0].country = undefined;
     }
-    this.directorNotFound = false; // Reset when typing
+    this.directorNotFound = false;
     this.directorSearchTerms.next(term);
   }
 
@@ -152,34 +147,33 @@ export class ManageMoviesComponent implements OnInit {
     const term = (event.target as HTMLInputElement).value;
     console.log(`Cast input event for index ${index}, term:`, term);
 
-    // Reset person_id and notFound flag if name changes after selection
     if (this.newContent.cast[index].person_id && this.newContent.cast[index].name !== term) {
       this.newContent.cast[index].person_id = undefined;
       this.newContent.cast[index].state = undefined;
       this.newContent.cast[index].country = undefined;
     }
-    this.castNotFound[index] = false; // Reset when typing
+    this.castNotFound[index] = false;
     this.castSearchTerms[index].next({ query: term, index });
   }
 
   selectDirector(person: PersonRequest): void {
     console.log('Selected director:', person);
     this.newContent.directors[0] = { ...person };
-    this.directorSearchResults = []; // Clear search results
-    this.directorNotFound = false; // Reset not found flag
+    this.directorSearchResults = [];
+    this.directorNotFound = false;
     this.cdr.detectChanges();
   }
 
   selectCast(person: PersonRequest, index: number): void {
     console.log('Selected cast member:', person, 'at index:', index);
     this.newContent.cast[index] = { ...person };
-    this.castSearchResults[index] = []; // Clear search results
-    this.castNotFound[index] = false; // Reset not found flag
+    this.castSearchResults[index] = [];
+    this.castNotFound[index] = false;
     this.cdr.detectChanges();
   }
 
   loadMovies(): void {
-    this.http.get<Content[]>(`${this.apiUrl}/content/browse/movies`)
+    this.http.get<Content[]>(`${this.apiUrl}/content/all-content`)
       .subscribe({
         next: movies => {
           this.movies = movies;
@@ -216,24 +210,16 @@ export class ManageMoviesComponent implements OnInit {
       });
   }
 
-  startEditMovie(movie: any): void {
-    this.selectedMovie = { ...movie };
-  }
-
-  saveEditMovie(): void {
-    if (!this.selectedMovie) return;
-
-    this.http.put(`${this.apiUrl}/content/admin/movies/${this.selectedMovie.id}`, this.selectedMovie)
-      .subscribe(() => {
-        this.selectedMovie = null;
-        this.loadMovies();
-      });
-  }
 
   deleteMovie(id: string): void {
-    this.http.delete(`${this.apiUrl}/content/admin/movies/${id}`)
-      .subscribe(() => this.loadMovies());
-    this.cdr.detectChanges();
+    this.http.delete(`${this.apiUrl}/content/${id}`)
+      .subscribe({
+        next: () => {
+          this.movies = this.movies.filter(movie => movie.content_id !== id);
+          this.cdr.detectChanges();
+        },
+        error: err => console.error('Error deleting movie:', err)
+      });
   }
 
   updateSeasons(): void {

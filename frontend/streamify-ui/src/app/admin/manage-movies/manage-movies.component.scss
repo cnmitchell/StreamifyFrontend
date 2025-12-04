@@ -1,132 +1,150 @@
-h2, h3, h4, h5 {
-  color: #E50914;
+:host { display: block; padding: 2rem; }
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.add-content-action {
-  margin-bottom: 20px;
-  button {
-    background-color: #E50914;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+h1 { font-size: 1.75rem; color: #fff; margin: 0; }
 
-    &:hover {
-      background-color: #F40612;
-    }
-  }
+.btn {
+  background: linear-gradient(90deg,#1db954,#18a54b);
+  border: none;
+  padding: .65rem 1rem;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.add-content-form {
-  background-color: #333;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+.add-member-form {
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255,255,255,0.05);
+}
 
-  h3 {
-    margin-top: 0;
-  }
+.table-container {
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.05);
+}
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 15px;
-  }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  input[type="text"],
-  input[type="date"],
-  input[type="number"],
-  select {
-    width: 100%;
-    padding: 10px;
+thead th {
+  position: sticky;
+  top: 0;
+  background: #1db954;/* Match your page background color */
+  text-align: left;
+  padding: 1rem;
+  color: white;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  z-index: 1;
+}
+
+tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+tbody td {
+  padding: .8rem 0;
+  color: #fff;
+}
+
+.actions {
+  display: flex;
+  gap: .5rem;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: #9fb2cf;
+  cursor: pointer;
+}
+
+.btn-icon.btn-danger { color: #ffb4b4; }
+
+.btn-icon svg { width: 20px; height: 20px; }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  background-color: #444;
+  border: 1px solid #555;
+  color: #fff;
+  border-radius: 4px;
+}
+
+label {
+  margin-right: 15px;
+  color: #fff;
+}
+
+.person-input {
+  position: relative;
+  margin-bottom: 15px;
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     background-color: #444;
     border: 1px solid #555;
-    color: #fff;
-    border-radius: 4px;
-  }
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
 
-  label {
-    margin-right: 15px;
-    color: #fff;
-  }
+    div {
+      padding: 10px;
+      cursor: pointer;
+      color: #fff;
 
-  .person-input {
-    position: relative; /* This is crucial for positioning the dropdown */
-    margin-bottom: 15px;
-
-    .search-results {
-      position: absolute;
-      top: 100%; /* Position below the input */
-      left: 0;
-      right: 0;
-      background-color: #444;
-      border: 1px solid #555;
-      border-top: none; /* No top border as it's below the input */
-      border-radius: 0 0 4px 4px; /* Rounded corners only at the bottom */
-      z-index: 1000;
-      max-height: 200px; /* Limit height and add scroll if many results */
-      overflow-y: auto;
-
-      div {
-        padding: 10px;
-        cursor: pointer;
-        color: #fff;
-
-        &:hover {
-          background-color: #555;
-        }
+      &:hover {
+        background-color: #555;
       }
     }
   }
-
-  .season-section {
-    margin-bottom: 15px;
-  }
-
-  .episode-display {
-    color: #ccc;
-    margin-left: 20px;
-  }
-
-  .form-actions {
-    margin-top: 20px;
-    button {
-      margin-right: 10px;
-    }
-  }
 }
 
-.movie-list-container {
-  max-height: 500px; /* Or any other value that suits your design */
-  overflow-y: auto;
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    color: #fff;
+.season-section {
+  margin-bottom: 15px;
+}
 
-    th, td {
-      border: 1px solid #444;
-      padding: 8px;
-      text-align: left;
-    }
+.episode-display {
+  color: #ccc;
+  margin-left: 20px;
+}
 
-    th {
-      background-color: #E50914;
-    }
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: .5rem;
+}
 
-    tbody tr:nth-child(odd) {
-      background-color: #222;
-    }
-
-    tbody tr:hover {
-      background-color: #333;
-    }
-
-    button {
-      margin-right: 5px;
-    }
-  }
+.btn-close {
+  background: #444;
 }
