@@ -50,11 +50,12 @@ export class LoginComponent implements OnInit {
     this.loginError = '';
     const payload = this.form.value;
 
-    this.http.post('/api/content/login', payload, { responseType: 'text' }).subscribe({
-      next: () => {
+    this.http.post('/api/content/login', payload, { responseType: 'json' }).subscribe({
+      next: (response) => {
         this.loading = false;
-        this.authService.setEmail(payload.email);
-        this.router.navigate(['/home']);
+        console.log('Login successful', response);
+        this.authService.setMember(response);
+        this.router.navigate(['/home/browse']);
         this.cdr.detectChanges();
       },
       error: (err) => {

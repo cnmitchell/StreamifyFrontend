@@ -1,22 +1,132 @@
-:host { display: block; padding: 2rem; }
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
+h2, h3, h4, h5 {
+  color: #E50914;
 }
 
-.movie-list-container{
-  height: 400px;
+.add-content-action {
+  margin-bottom: 20px;
+  button {
+    background-color: #E50914;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #F40612;
+    }
+  }
+}
+
+.add-content-form {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 10px;
+    background-color: #444;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  label {
+    margin-right: 15px;
+    color: #fff;
+  }
+
+  .person-input {
+    position: relative; /* This is crucial for positioning the dropdown */
+    margin-bottom: 15px;
+
+    .search-results {
+      position: absolute;
+      top: 100%; /* Position below the input */
+      left: 0;
+      right: 0;
+      background-color: #444;
+      border: 1px solid #555;
+      border-top: none; /* No top border as it's below the input */
+      border-radius: 0 0 4px 4px; /* Rounded corners only at the bottom */
+      z-index: 1000;
+      max-height: 200px; /* Limit height and add scroll if many results */
+      overflow-y: auto;
+
+      div {
+        padding: 10px;
+        cursor: pointer;
+        color: #fff;
+
+        &:hover {
+          background-color: #555;
+        }
+      }
+    }
+  }
+
+  .season-section {
+    margin-bottom: 15px;
+  }
+
+  .episode-display {
+    color: #ccc;
+    margin-left: 20px;
+  }
+
+  .form-actions {
+    margin-top: 20px;
+    button {
+      margin-right: 10px;
+    }
+  }
+}
+
+.movie-list-container {
+  max-height: 500px; /* Or any other value that suits your design */
   overflow-y: auto;
-  border: 1px solid #ccc;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
 
-.movie-list-container table th {
-  text-align: center;
-  position: sticky;
-  background: rgba(255,255,255,0.02);
-  top: 0;
-  z-index: 1;
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #E50914;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #222;
+    }
+
+    tbody tr:hover {
+      background-color: #333;
+    }
+
+    button {
+      margin-right: 5px;
+    }
+  }
 }

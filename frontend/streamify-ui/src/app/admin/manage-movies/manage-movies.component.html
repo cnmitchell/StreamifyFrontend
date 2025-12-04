@@ -1,42 +1,108 @@
-<h2>Movie Manager</h2>
+<div class="manage-movies-container">
+  <header class="page-header">
+    <h1>Manage Content</h1>
+    <button class="btn" (click)="showAddContentForm = true" *ngIf="!showAddContentForm">Add Content</button>
+  </header>
 
-<!-- Movie List -->
-<div class = "movie-list-container">
-  <table>
-    <tr>
-      <th>Content Id</th>
-      <th>Title</th>
-    </tr>
+  <div>
+    <label><input type="radio" name="contentType" value="movie" [(ngModel)]="contentType"> Movie</label>
+    <label><input type="radio" name="contentType" value="series" [(ngModel)]="contentType"> Series</label>
+  </div>
 
-    <tr *ngFor="let m of movies">
-      <td>{{m.content_id}}</td>
-      <td>{{m.content_name}}</td>
-      <td>
-        <button (click)="startEditMovie(m)">Edit</button>
-        <button (click)="deleteMovie(m.content_id)">Delete</button>
-      </td>
-    </tr>
-  </table>
+  <form (ngSubmit)="addContent()">
+    <div class="form-grid">
+      <input [(ngModel)]="newContent.content_name" name="content_name" placeholder="Name" required>
+      <input type="date" [(ngModel)]="newContent.release_date" name="release_date" placeholder="Release Date" required>
+      <input [(ngModel)]="newContent.IMDB_link" name="IMDB_link" placeholder="IMDB Link">
+      <input [(ngModel)]="newContent.poster_url" name="poster_url" placeholder="Poster URL">
+      <select [(ngModel)]="newContent.genre" name="genre" required>
+        <option value="" disabled>Select Genre</option>
+        <option *ngFor="let genre of genres" [value]="genre">{{ genre }}</option>
+      </select>
+    </div>
+
+    <!-- Director -->
+    <h4>Director</h4>
+    <div class="person-input">
+      <input [(ngModel)]="newContent.directors[0].name" name="director_name_0" placeholder="Director Name" (input)="searchDirectors($event)" autocomplete="off">
+      <div *ngIf="directorSearchResults.length > 0" class="search-results">
+        <div *ngFor="let person of directorSearchResults" (click)="selectDirector(person)">
+          {{ person.name }}
+        </div>
+      </div>
+      <!-- Show details only if no person_id is selected AND directorNotFound is true -->
+      <div *ngIf="!newContent.directors[0].person_id && directorNotFound">
+        <p>Director not found. Please enter details:</p>
+        <input [(ngModel)]="newContent.directors[0].state" name="director_state_0" placeholder="State">
+        <input [(ngModel)]="newContent.directors[0].country" name="director_country_0" placeholder="Country">
+      </div>
+    </div>
+
+    <!-- Cast -->
+    <h4>Cast</h4>
+    <div *ngFor="let actor of newContent.cast; let i = index" class="person-input">
+      <input [(ngModel)]="actor.name" name="actor_name_{{i}}" placeholder="Actor Name" (input)="searchCast($event, i)" autocomplete="off">
+      <div *ngIf="castSearchResults[i] && castSearchResults[i].length > 0" class="search-results">
+        <div *ngFor="let person of castSearchResults[i]" (click)="selectCast(person, i)">
+          {{ person.name }}
+        </div>
+      </div>
+      <!-- Show details only if no person_id is selected AND castNotFound for this index is true -->
+      <div *ngIf="!actor.person_id && castNotFound[i]">
+        <p>Actor not found. Please enter details:</p>
+        <input [(ngModel)]="actor.state" name="actor_state_{{i}}" placeholder="State">
+        <input [(ngModel)]="actor.country" name="actor_country_{{i}}" placeholder="Country">
+      </div>
+    </div>
+
+    <!-- Movie Specific Fields -->
+    <div *ngIf="contentType === 'movie'">
+      <h4>Sequel Information</h4>
+      <input [(ngModel)]="newContent.sequel_to" name="sequel_to" placeholder="Is Sequel To (Content ID)">
+    </div>
+
+    <!-- Series Specific Fields -->
+    <div *ngIf="contentType === 'series'">
+      <h4>Series Information</h4>
+      <input type="number" [(ngModel)]="newContent.total_seasons" name="total_seasons" placeholder="Number of Seasons" (ngModelChange)="updateSeasons()">
+      <div *ngFor="let season of seasons; let i = index" class="season-section">
+        <h5>Season {{ i + 1 }}</h5>
+        <div *ngFor="let episode of season.episodes" class="episode-display">
+          <span>Episode {{ episode.episode_number }}: {{ episode.episode_title }}</span>
+        </div>
+        <button type="button" (click)="addEpisode(i)">Add Episode</button>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">Submit</button>
+      <button type="button" (click)="resetAndHideForm()">Cancel</button>
+    </div>
+  </form>
 </div>
 
 <hr>
 
-<h3>Add Movie</h3>
-<input [(ngModel)]="newMovie.title" placeholder="Title">
-<input [(ngModel)]="newMovie.genre" placeholder="Genre">
-<input [(ngModel)]="newMovie.actor" placeholder="Actors">
-<input [(ngModel)]="newMovie.director" placeholder="Director">
-<input [(ngModel)]="newMovie.keyword" placeholder="keyword">
-<button (click)="addMovie()">Add</button>
-
-<hr>
-
-<div *ngIf="selectedMovie">
-  <h3>Add Movie</h3>
-  <input [(ngModel)]="selectedMovie.title" placeholder="Title">
-  <input [(ngModel)]="selectedMovie.genre" placeholder="Genre">
-  <input [(ngModel)]="selectedMovie.actor" placeholder="Actors">
-  <input [(ngModel)]="selectedMovie.director" placeholder="Director">
-  <input [(ngModel)]="selectedMovie.keyword" placeholder="keyword">
-  <button (click)="saveEditMovie()">Save</button>
+<!-- Content List -->
+<div class="movie-list-container">
+  <h3>Existing Content</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Content ID</th>
+        <th>Title</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let content of movies">
+        <td>{{ content.content_id }}</td>
+        <td>{{ content.content_name }}</td>
+        <td>
+          <button (click)="startEditMovie(content)">Edit</button>
+          <button (click)="deleteMovie(content.content_id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

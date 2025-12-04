@@ -1,0 +1,60 @@
+<div class="account-wrapper">
+  <div class="account-container" [class.loading]="isLoading">
+    <div *ngIf="member">
+      <h1>My Account</h1>
+
+      <div class="account-details">
+        <!-- Name -->
+        <div class="detail-item">
+          <h3>Name</h3>
+          <p *ngIf="!isEditMode">{{ member.name }}</p>
+          <input *ngIf="isEditMode" [(ngModel)]="editableMember.name" type="text">
+        </div>
+
+        <!-- Email -->
+        <div class="detail-item">
+          <h3>Email</h3>
+          <p *ngIf="!isEditMode">{{ member.email }}</p>
+          <input *ngIf="isEditMode" [(ngModel)]="editableMember.email" type="email">
+        </div>
+
+        <!-- Address -->
+        <div class="detail-item">
+          <h3>Address</h3>
+          <p *ngIf="!isEditMode">{{ member.street }}, {{ member.city }}, {{ member.state }}, {{ member.country }}</p>
+          <div *ngIf="isEditMode">
+            <input [(ngModel)]="editableMember.street" placeholder="Street">
+            <input [(ngModel)]="editableMember.city" placeholder="City">
+            <input [(ngModel)]="editableMember.state" placeholder="State">
+            <input [(ngModel)]="editableMember.country" placeholder="Country">
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="detail-item">
+          <h3>Phone</h3>
+          <p *ngIf="!isEditMode">{{ member.phone }}</p>
+          <input *ngIf="isEditMode" [(ngModel)]="editableMember.phone" type="tel">
+        </div>
+
+        <!-- Password Change -->
+        <div class="detail-item" *ngIf="isEditMode">
+          <h3>Change Password</h3>
+          <input [(ngModel)]="passwordChange.newPassword" type="password" placeholder="New Password">
+          <input [(ngModel)]="passwordChange.confirmPassword" type="password" placeholder="Confirm New Password">
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button *ngIf="!isEditMode" (click)="enableEditMode()" class="edit-btn">Edit</button>
+        <button *ngIf="!isEditMode" (click)="logout()" class="logout-btn">Logout</button>
+        <button *ngIf="isEditMode" (click)="submitChanges()" class="submit-btn">Submit</button>
+        <button *ngIf="isEditMode" (click)="cancelEditMode()" class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+</div>

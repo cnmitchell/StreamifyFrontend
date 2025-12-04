@@ -82,8 +82,8 @@ export class BrowseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.email$.subscribe(email => {
-      this.userEmail = email;
+    this.authService.member$.subscribe(member => {
+      this.userEmail = member ? member.email : null;
       this.loadData();
     });
 

@@ -55,6 +55,12 @@
   background: rgba(255,255,255,0.05);
 }
 
+.nav-group li a.active-link {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  color: #fff;
+}
+
 .main-content {
   flex-grow: 1;
   display: flex;

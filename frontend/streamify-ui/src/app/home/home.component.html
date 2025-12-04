@@ -11,20 +11,20 @@
     <nav class="nav-group">
       <h2>Member</h2>
       <ul>
-        <li><a routerLink="/home/browse">Browse Movies/Series</a></li>
-        <li><a routerLink="/home/streaming-history">Streaming History</a></li>
-        <li><a routerLink="/home/account">My Account</a></li>
+        <li><a routerLink="browse" routerLinkActive="active-link">Browse Movies/Series</a></li>
+        <li><a routerLink="streaming-history" routerLinkActive="active-link">Streaming History</a></li>
+        <li><a routerLink="account" routerLinkActive="active-link">My Account</a></li>
       </ul>
     </nav>
 
-    <nav class="nav-group">
+    <nav class="nav-group" *ngIf="isAdmin">
       <h2>Administrator</h2>
       <ul>
-        <li><a routerLink="/home/admin/member-streams">View Member Streams</a></li>
-        <li><a routerLink="/home/admin/streaming-trends">Streaming Trends</a></li>
-        <li><a routerLink="/home/admin/top-ten">Top 10 Movies/Series</a></li>
-        <li><a routerLink="/home/admin/manage-members">Manage Members</a></li>
-        <li><a routerLink="/home/admin/manage-movies">Manage Movies/Series</a></li>
+        <li><a routerLink="admin/member-streams" routerLinkActive="active-link">View Member Streams</a></li>
+        <li><a routerLink="admin/streaming-trends" routerLinkActive="active-link">Streaming Trends</a></li>
+        <li><a routerLink="admin/top-ten" routerLinkActive="active-link">Top 10 Movies/Series</a></li>
+        <li><a routerLink="admin/manage-members" routerLinkActive="active-link">Manage Members</a></li>
+        <li><a routerLink="admin/manage-movies" routerLinkActive="active-link">Manage Movies/Series</a></li>
       </ul>
     </nav>
   </aside>

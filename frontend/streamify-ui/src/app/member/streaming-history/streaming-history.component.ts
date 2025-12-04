@@ -27,16 +27,14 @@ export class StreamingHistoryComponent implements OnInit {
   }
 
   fetchStreamingHistory(): void {
-    this.authService.email$.pipe(
-      switchMap(email => {
-        console.log('Email:', email);
-        if (!email) {
+    this.authService.member$.pipe(
+      switchMap(member => {
+        if (!member || !member.email) {
           return of([]);
         }
-        return this.http.get<StreamingHistory[]>(`api/content/streaming-history`, {params: {email}});
+        return this.http.get<StreamingHistory[]>(`api/content/streaming-history`, {params: {email: member.email}});
       })
     ).subscribe(history => {
-      console.log('Streaming History:', history);
       this.streamingHistory = history;
       this.cdr.detectChanges();
     });
