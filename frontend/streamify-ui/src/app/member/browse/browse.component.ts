@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
+//import {error} from '@angular/compiler-cli/src/transformers/util';
 
 export interface Content {
   content_id: string;
@@ -60,6 +61,11 @@ export class BrowseComponent implements OnInit {
   episodes: Episode[] = [];
   isModalVisible = false;
   isModalLoading = false;
+
+  //new
+  selectedContentId: string | null = null;
+  streamingModalVisible: boolean = false;
+
   searchForm: FormGroup;
   apiUrl = "/api/content";
   activeTab: 'movies' | 'series' = 'movies';
@@ -145,6 +151,10 @@ export class BrowseComponent implements OnInit {
     this.selectedDetails = null;
     this.selectedSeriesDetails = null;
 
+    //new
+    this.selectedContentId = movie.content_id;
+    console.log(this.selectedContentId);
+
     const params = new HttpParams().set('content_id', movie.content_id);
 
     this.http.get<ContentDetailsResponse>(`${this.apiUrl}/movie-details`, { params })
@@ -160,6 +170,9 @@ export class BrowseComponent implements OnInit {
     this.isModalLoading = true;
     this.selectedDetails = null;
     this.selectedSeriesDetails = null;
+
+    //new
+    this.selectedContentId = seriesItem.content_id;
 
     const params = new HttpParams().set('content_id', seriesItem.content_id);
 
@@ -191,6 +204,45 @@ export class BrowseComponent implements OnInit {
     this.selectedEpisode = episode;
   }
 
+  //new
+  startStreaming(): void {
+    if (!this.userEmail) {
+      alert('You must be logged in to start streaming.');
+      return;
+    }
+
+    const body = {
+      email: this.userEmail,
+      content_id: this.selectedContentId
+    };
+
+    this.http.post(`${this.apiUrl}/has`, body, {responseType: 'text' as 'json'})
+      .subscribe({next: () => {
+        this.streamingModalVisible = true;
+      },
+      error: err => {
+        console.error('Error starting streaming', err);
+      }
+    });
+  }
+
+  stopStreaming(): void {
+    if (!this.userEmail || !this.streamingModalVisible) {
+      this.streamingModalVisible = false;
+      return;
+    }
+
+
+    this.http.delete(`${this.apiUrl}/has`)
+      .subscribe({next: () => {
+        this.streamingModalVisible = false;
+        },
+        error: err => {
+        console.error('Error stopping streaming', err);
+        }
+      });
+  }
+
   closeModal(): void {
     this.isModalVisible = false;
     this.selectedDetails = null;
@@ -199,5 +251,9 @@ export class BrowseComponent implements OnInit {
     this.selectedEpisode = null;
     this.seasons = [];
     this.episodes = [];
+
+    //new
+    this.selectedContentId = null;
+    this.streamingModalVisible = false;
   }
 }
