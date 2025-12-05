@@ -227,19 +227,26 @@ export class BrowseComponent implements OnInit {
   }
 
   stopStreaming(): void {
-    if (!this.userEmail || !this.streamingModalVisible) {
+    if (!this.userEmail || !this.selectedContentId) {
       this.streamingModalVisible = false;
       return;
     }
 
+    const options = {
+      body: {
+        email: this.userEmail,
+        content_id: this.selectedContentId,
+      },
+    };
 
-    this.http.delete(`${this.apiUrl}/has`)
-      .subscribe({next: () => {
-        this.streamingModalVisible = false;
+    this.http.delete(`${this.apiUrl}/has`, options)
+      .subscribe({
+        next: () => {
+          this.streamingModalVisible = false;
         },
-        error: err => {
-        console.error('Error stopping streaming', err);
-        }
+        error: (err) => {
+          console.error('Error stopping streaming', err);
+        },
       });
   }
 
