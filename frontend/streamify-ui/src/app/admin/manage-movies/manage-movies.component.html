@@ -23,7 +23,6 @@
         </select>
       </div>
 
-      <!-- Director -->
       <h4>Director</h4>
       <div class="person-input">
         <input [(ngModel)]="newContent.directors[0].name" name="director_name_0" placeholder="Director Name" (input)="searchDirectors($event)" autocomplete="off">
@@ -39,7 +38,6 @@
         </div>
       </div>
 
-      <!-- Cast -->
       <h4>Cast</h4>
       <div *ngFor="let actor of newContent.cast; let i = index" class="person-input">
         <input [(ngModel)]="actor.name" name="actor_name_{{i}}" placeholder="Actor Name" (input)="searchCast($event, i)" autocomplete="off">
@@ -55,13 +53,11 @@
         </div>
       </div>
 
-      <!-- Movie Specific Fields -->
       <div *ngIf="contentType === 'movie'">
         <h4>Sequel Information</h4>
         <input [(ngModel)]="newContent.sequel_to" name="sequel_to" placeholder="Is Sequel To (Content ID)">
       </div>
 
-      <!-- Series Specific Fields -->
       <div *ngIf="contentType === 'series'">
         <h4>Series Information</h4>
         <input type="number" [(ngModel)]="newContent.total_seasons" name="total_seasons" placeholder="Number of Seasons" (ngModelChange)="updateSeasons()">

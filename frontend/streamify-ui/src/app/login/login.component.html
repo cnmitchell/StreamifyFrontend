@@ -12,7 +12,6 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <label class="field">
           <span class="icon-left" aria-hidden="true">
-            <!-- user icon -->
             <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5z"/></svg>
           </span>
           <input type="email" formControlName="email" placeholder="Email" aria-label="Email" />
@@ -57,14 +56,13 @@
         }
 
         <div class="actions">
-          <button class="btn" type="submit" [disabled]="loading">
+          <button class="btn btn-lg" type="submit" [disabled]="loading">
             @if (!loading) {
             <span>Sign In</span>
             } @else {
             <span>Signing in...</span>
             }
           </button>
-          <a class="link" href="#" tabindex="-1">Forgot password?</a>
         </div>
       </form>
     </div>

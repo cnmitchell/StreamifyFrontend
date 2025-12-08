@@ -46,7 +46,7 @@ export class AccountComponent implements OnInit {
 
   submitChanges(): void {
     this.isLoading = true;
-    const { name, email, street, city, state, country, phone } = this.editableMember;
+    const { name, email, street, city, state, country, phone, subscription_name } = this.editableMember;
     const updateUserRequest: any = {
       id: this.member.id,
       name,
@@ -55,7 +55,8 @@ export class AccountComponent implements OnInit {
       city,
       state,
       country,
-      phone
+      phone,
+      subName: subscription_name
     };
 
     if (this.passwordChange.newPassword) {

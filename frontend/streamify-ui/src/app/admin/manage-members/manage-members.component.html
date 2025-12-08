@@ -1,142 +1,140 @@
-<div class="manage-members-container">
-  <header class="page-header">
-    <h1>Manage Members</h1>
-    <button class="btn" (click)="addMember()">Add Member</button>
-  </header>
+<header class="page-header">
+  <h1>Manage Members</h1>
+  <button class="btn" (click)="addMember()">Add Member</button>
+</header>
 
-  <div *ngIf="showAddForm" class="add-member-form">
-    <h2>Add Member</h2>
-    <form (ngSubmit)="submitNewMember()" #memberForm="ngForm">
-      <div class="form-row">
+<div *ngIf="showAddForm" class="add-member-form">
+  <h2>Add Member</h2>
+  <form (ngSubmit)="submitNewMember()" #memberForm="ngForm">
+    <div class="form-row">
+      <label>
+        Name
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="newMember.name"
+          required/>
+      </label>
+
+      <label>
+        Email
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="newMember.email"
+          required/>
+      </label>
+    </div>
+
+
+    <div class="form-row">
         <label>
-          Name
+          Password
           <input
-            type="text"
-            name="name"
-            [(ngModel)]="newMember.name"
-            required/>
+            type="password"
+            name="password"
+            [(ngModel)]="newMember.password"
+            required
+          />
         </label>
 
         <label>
-          Email
+          Phone
           <input
-            type="email"
-            name="email"
-            [(ngModel)]="newMember.email"
-            required/>
+            type="tel"
+            name="phone"
+            [(ngModel)]="newMember.phone"/>
         </label>
       </div>
 
+      <div class="form-row">
+        <label>
+          Street
+          <input
+            type="text"
+            name="street"
+            [(ngModel)]="newMember.street"/>
+        </label>
+
+        <label>
+          City
+          <input
+            type="text"
+            name="city"
+            [(ngModel)]="newMember.city"/>
+        </label>
+      </div>
 
       <div class="form-row">
-          <label>
-            Password
-            <input
-              type="password"
-              name="password"
-              [(ngModel)]="newMember.password"
-              required
-            />
-          </label>
+        <label>
+          State
+          <input
+            type="text"
+            name="state"
+            [(ngModel)]="newMember.state"/>
+        </label>
 
-          <label>
-            Phone
-            <input
-              type="tel"
-              name="phone"
-              [(ngModel)]="newMember.phone"/>
-          </label>
-        </div>
+        <label>
+          Country
+          <input
+            type="text"
+            name="country"
+            [(ngModel)]="newMember.country"/>
+        </label>
+      </div>
 
-        <div class="form-row">
-          <label>
-            Street
-            <input
-              type="text"
-              name="street"
-              [(ngModel)]="newMember.street"/>
-          </label>
+      <div class="form-row">
+        <span>Subscription Type</span>
+        <label class="radio-option">
+          <input
+            type="radio"
+            name="subscription"
+            [(ngModel)]="newMember.subName"
+            value="Basic"/>
+          Basic
+        </label>
 
-          <label>
-            City
-            <input
-              type="text"
-              name="city"
-              [(ngModel)]="newMember.city"/>
-          </label>
-        </div>
+        <label class="radio-option">
+          <input
+            type="radio"
+            name="subscription"
+            [(ngModel)]="newMember.subName"
+            value="Premium"/>
+          Premium
+        </label>
+      </div>
 
-        <div class="form-row">
-          <label>
-            State
-            <input
-              type="text"
-              name="state"
-              [(ngModel)]="newMember.state"/>
-          </label>
-
-          <label>
-            Country
-            <input
-              type="text"
-              name="country"
-              [(ngModel)]="newMember.country"/>
-          </label>
-        </div>
-
-        <div class="form-row">
-          <span>Subscription Type</span>
-          <label class="radio-option">
-            <input
-              type="radio"
-              name="subscription"
-              [(ngModel)]="newMember.subName"
-              value="Basic"/>
-            Basic
-          </label>
-
-          <label class="radio-option">
-            <input
-              type="radio"
-              name="subscription"
-              [(ngModel)]="newMember.subName"
-              value="Premium"/>
-            Premium
-          </label>
-        </div>
-
-        <div class="form-actions">
-          <button class="btn" type="submit" [disabled]="memberForm.invalid">
-            Save
-          </button>
-          <button class="btn btn-close" type="button" (click)="cancelNewMember()">
-            Cancel
-          </button>
-        </div>
-    </form>
-  </div>
+      <div class="form-actions">
+        <button class="btn" type="submit" [disabled]="memberForm.invalid">
+          Save
+        </button>
+        <button class="btn btn-close" type="button" (click)="cancelNewMember()">
+          Cancel
+        </button>
+      </div>
+  </form>
+</div>
 
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Subscription Plan</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let member of members">
-          <td>{{ member.name }}</td>
-          <td>{{ member.email }}</td>
-          <td>{{ member.subscription_name }}</td>
-          <td class="actions">
-            <button class="btn-icon btn-danger" (click)="removeMember(member)" aria-label="Remove member"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subscription Plan</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let member of members">
+        <td>{{ member.name }}</td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.subscription_name }}</td>
+        <td class="actions">
+          <button class="btn-icon btn-danger" (click)="removeMember(member)" aria-label="Remove member"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -62,7 +62,7 @@ export class ManageMoviesComponent implements OnInit {
   apiUrl = "/api";
   showAddContentForm = false;
   contentType: 'movie' | 'series' = 'movie';
-  genres = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Documentary'];
+  genres = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Documentary', 'Anime', 'Adventure', 'Fantasy', 'Musical'];
   seasons: Season[] = [];
 
   directorSearchResults: PersonRequest[] = [];

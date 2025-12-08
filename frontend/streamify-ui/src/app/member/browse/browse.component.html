@@ -53,7 +53,6 @@
     </div>
   </div>
 
-  <!-- Details Modal -->
   <div class="modal-overlay" *ngIf="isModalVisible" (click)="closeModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <button class="close-button" (click)="closeModal()" aria-label="Close modal">&times;</button>
@@ -78,7 +77,6 @@
             <p><strong>Awards:</strong> {{ selectedDetails.details[0].awards }}</p>
           }
           <button class="play-button" (click)="startStreaming()">Play</button>
-
 
           <div class="sequels-container" *ngIf="selectedDetails.sequels && selectedDetails.sequels.length > 0">
             <h3>Sequels</h3>
@@ -131,17 +129,12 @@
   </div>
 </div>
 
-
 <div class="streaming-modal-backdrop" *ngIf="streamingModalVisible">
   <div class="streaming-modal">
     <h2>Currently Streaming</h2>
-
     <p>You are currently streaming this content.</p>
-
     <div class="streaming-modal-actions">
       <button class="stop-button" (click)="stopStreaming()">Stop</button>
     </div>
   </div>
 </div>
-
-

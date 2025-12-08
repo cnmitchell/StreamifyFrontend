@@ -37,10 +37,6 @@ export class AuthService {
     this.member$$.next(null);
   }
 
-  isLoggedIn(): boolean {
-    return this.getMember() !== null;
-  }
-
   updateUser(updateRequest: any): Observable<any> {
     return this.http.put('/api/content/user', updateRequest, { responseType: 'text' });
   }

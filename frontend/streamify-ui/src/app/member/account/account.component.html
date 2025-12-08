@@ -6,21 +6,18 @@
 
     <div class="table-container">
       <div class="account-details">
-        <!-- Name -->
         <div class="detail-item">
           <h3>Name</h3>
           <div *ngIf="!isEditMode">{{ member.name }}</div>
           <input *ngIf="isEditMode" [(ngModel)]="editableMember.name" type="text">
         </div>
 
-        <!-- Email -->
         <div class="detail-item">
           <h3>Email</h3>
           <div *ngIf="!isEditMode">{{ member.email }}</div>
           <input *ngIf="isEditMode" [(ngModel)]="editableMember.email" type="email">
         </div>
 
-        <!-- Address -->
         <div class="detail-item">
           <h3>Address</h3>
           <div *ngIf="!isEditMode">{{ member.street }}, {{ member.city }}, {{ member.state }}, {{ member.country }}</div>
@@ -32,14 +29,27 @@
           </div>
         </div>
 
-        <!-- Phone -->
         <div class="detail-item">
           <h3>Phone</h3>
           <div *ngIf="!isEditMode">{{ member.phone }}</div>
           <input *ngIf="isEditMode" [(ngModel)]="editableMember.phone" type="tel">
         </div>
 
-        <!-- Password Change -->
+        <div class="detail-item">
+          <h3>Subscription Plan</h3>
+          <div *ngIf="!isEditMode">{{ member.subscription_name }}</div>
+          <div *ngIf="isEditMode" class="subscription-inputs">
+            <label>
+              <input type="radio" name="subscription" value="Basic" [(ngModel)]="editableMember.subscription_name">
+              Basic
+            </label>
+            <label>
+              <input type="radio" name="subscription" value="Premium" [(ngModel)]="editableMember.subscription_name">
+              Premium
+            </label>
+          </div>
+        </div>
+
         <div class="detail-item" *ngIf="isEditMode">
           <h3>Change Password</h3>
           <div class="password-inputs">

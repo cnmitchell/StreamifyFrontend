@@ -1,32 +1,29 @@
-<h2>View Members Who Streamed a Movie</h2>
+<div class="page-header">
+  <h1>View Members Who Streamed a Movie</h1>
+</div>
 
-<label for="moveSelect">Select a Movie:</label>
+<div class="form-container">
+  <label for="movieSelect">Select a Movie:</label>
+  <select id="movieSelect" [(ngModel)]="selectedMovieId" (change)="onMovieChange()">
+    <option [ngValue]="null">-- Select a Movie --</option>
+    <ng-container *ngIf="movies$ | async as movies">
+      <option *ngFor="let m of movies" [ngValue]="m.content_id">
+        {{m.content_name}}
+      </option>
+    </ng-container>
+  </select>
+</div>
 
-<select
-  id="moveSelect"
-  [(ngModel)]="selectedMovieId"
-  (change)="onMovieChange()">
-  <option [ngValue]="null">-- Select a Movie --</option>
-
-  <ng-container *ngIf="movies$ | async as movies">
-    <option *ngFor="let m of movies" [ngValue]="m.content_id">
-      {{m.content_name}}
-    </option>
-  </ng-container>
-</select>
-
-<hr>
 <div *ngIf="isLoadingMembers"> loading members...</div>
 
-
-<div *ngIf="members.length > 0">
+<div class="table-container" *ngIf="members.length > 0">
   <h3>Streamed by:</h3>
-  <table class="members-table">
+  <table>
     <thead>
     <tr>
       <th>Member ID</th>
       <th>Name</th>
-      <th>email</th>
+      <th>Email</th>
       <th>Time Stamp</th>
     </tr>
     </thead>
@@ -41,10 +38,6 @@
   </table>
 </div>
 
-<div *ngIf="
-selectedMovieId &&
-hasRequestedMembers &&
-!isLoadingMembers &&
-members.length === 0">
+<div *ngIf="selectedMovieId && hasRequestedMembers && !isLoadingMembers && members.length === 0">
   No Members have streamed this movie
 </div>

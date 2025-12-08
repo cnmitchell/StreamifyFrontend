@@ -7,16 +7,38 @@
   margin-bottom: 2rem;
 }
 
+h1 { font-size: 1.75rem; color: #fff; margin: 0; }
 
-.top-ten-table{
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-
-  th,td{
-    border: 1px solid black;
-    padding: 0.5rem 0.75rem;
-    text-align: left;
-  }
+.table-container {
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #1db954;/* Match your page background color */
+  text-align: left;
+  padding: 1rem;
+  color: white;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  z-index: 1;
+}
+
+tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+tbody td {
+  padding: .8rem 1rem;
+  color: #fff;
+}

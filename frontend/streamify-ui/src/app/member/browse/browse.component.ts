@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
-//import {error} from '@angular/compiler-cli/src/transformers/util';
 
 export interface Content {
   content_id: string;
@@ -61,8 +60,6 @@ export class BrowseComponent implements OnInit {
   episodes: Episode[] = [];
   isModalVisible = false;
   isModalLoading = false;
-
-  //new
   selectedContentId: string | null = null;
   streamingModalVisible: boolean = false;
 
@@ -150,10 +147,7 @@ export class BrowseComponent implements OnInit {
     this.isModalLoading = true;
     this.selectedDetails = null;
     this.selectedSeriesDetails = null;
-
-    //new
     this.selectedContentId = movie.content_id;
-    console.log(this.selectedContentId);
 
     const params = new HttpParams().set('content_id', movie.content_id);
 
@@ -170,8 +164,6 @@ export class BrowseComponent implements OnInit {
     this.isModalLoading = true;
     this.selectedDetails = null;
     this.selectedSeriesDetails = null;
-
-    //new
     this.selectedContentId = seriesItem.content_id;
 
     const params = new HttpParams().set('content_id', seriesItem.content_id);
@@ -204,7 +196,6 @@ export class BrowseComponent implements OnInit {
     this.selectedEpisode = episode;
   }
 
-  //new
   startStreaming(): void {
     if (!this.userEmail) {
       alert('You must be logged in to start streaming.');
@@ -217,11 +208,18 @@ export class BrowseComponent implements OnInit {
     };
 
     this.http.post(`${this.apiUrl}/has`, body, {responseType: 'text' as 'json'})
-      .subscribe({next: () => {
+      .subscribe({
+        next: () => {
         this.streamingModalVisible = true;
+        this.cdr.detectChanges();
       },
       error: err => {
-        console.error('Error starting streaming', err);
+        if (err.error && typeof err.error === 'string' && (err.error.includes('Stream limit exceeded') || err.error.includes('Subscription Error'))) {
+          alert("You have reached the maximum number of active streams for you subscription plan.");
+        } else {
+          console.error('Error starting streaming', err);
+          alert('An unexpected error occurred while trying to start the stream.');
+        }
       }
     });
   }
@@ -243,6 +241,7 @@ export class BrowseComponent implements OnInit {
       .subscribe({
         next: () => {
           this.streamingModalVisible = false;
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('Error stopping streaming', err);
@@ -258,8 +257,6 @@ export class BrowseComponent implements OnInit {
     this.selectedEpisode = null;
     this.seasons = [];
     this.episodes = [];
-
-    //new
     this.selectedContentId = null;
     this.streamingModalVisible = false;
   }

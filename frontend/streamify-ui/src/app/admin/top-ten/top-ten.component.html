@@ -1,29 +1,26 @@
-<h2>Top Ten Streamed</h2>
+<div class="page-header">
+  <h1>Top Ten Streamed</h1>
+</div>
 
-<!-- Movie List -->
-<div class = "top-ten-container">
-  <table class="top-ten-table">
+<div class="table-container">
+  <table>
     <thead>
-      <tr>
-        <th>Content Id</th>
-        <th>Title</th>
-        <th>Genre</th>
-        <th>Release Date</th>
-        <th>Amount Streamed</th>
-
-      </tr>
+    <tr>
+      <th>Content Id</th>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Release Date</th>
+      <th>Amount Streamed</th>
+    </tr>
     </thead>
-
     <tbody *ngIf="topTen$ | async as topTen">
-      <tr *ngFor="let t of topTen">
-        <td>{{t.content_id}}</td>
-        <td>{{t.content_name}}</td>
-        <td>{{t.genre}}</td>
-        <td>{{t.release_date}}</td>
-        <td>{{t.stream_count}}</td>
-      </tr>
+    <tr *ngFor="let t of topTen">
+      <td>{{t.content_id}}</td>
+      <td>{{t.content_name}}</td>
+      <td>{{t.genre}}</td>
+      <td>{{t.release_date}}</td>
+      <td>{{t.stream_count}}</td>
+    </tr>
     </tbody>
   </table>
 </div>
-
-<hr>

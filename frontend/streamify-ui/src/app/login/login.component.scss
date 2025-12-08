@@ -68,7 +68,10 @@
   display: block;
 }
 
-.actions { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; gap: 1rem; }
+.actions {
+  display: grid;
+  margin-top: 1.5rem;
+}
 
 .btn {
   background: linear-gradient(90deg,#1db954,#18a54b);
